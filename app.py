@@ -8,10 +8,14 @@ import streamlit as st
 
 from analysis import COLORS, LEGACY, LINES, findings, load
 
-NAVY, AMBER, MUTED = "#1E40AF", "#D97706", "#475569"
 REPO = "https://github.com/szal31/RAPIDKL-Ridership-Analysis"
 
 st.set_page_config(page_title="Rapid KL Ridership", page_icon=":material/train:", layout="wide")
+
+# One chart palette for both themes: switching theme doesn't rerun the app, so colours can't depend on it.
+# Each hue keeps >= 3:1 contrast on the light (#F8FAFC) and dark (#0F172A) backgrounds.
+NAVY, AMBER, MUTED = "#3B82F6", "#D97706", "#64748B"
+LINE_COLORS = dict(zip(COLORS, ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300"]))
 
 
 @st.cache_data
@@ -83,7 +87,7 @@ trend, dow_tab, hol_tab, table_tab = st.tabs(["Trend", "Day of week", "Public ho
 
 with trend:
     long = series.reset_index().melt("date", var_name="Line", value_name="Riders")
-    color = alt.Color("Line:N", scale=alt.Scale(domain=lines, range=[COLORS[l] for l in lines]),
+    color = alt.Color("Line:N", scale=alt.Scale(domain=lines, range=[LINE_COLORS[l] for l in lines]),
                       legend=alt.Legend(orient="top", title=None, columns=3, labelFontSize=12))
     hover = alt.selection_point(fields=["date"], nearest=True, on="pointerover", empty=False, clear="pointerout")
     line_layer = alt.Chart(long).mark_line(strokeWidth=2).encode(
@@ -141,4 +145,5 @@ with table_tab:
 
 st.divider()
 st.caption(f"Source: [data.gov.my](https://data.gov.my/data-catalogue/ridership_headline) (Prasarana) · "
-           f"Holidays: Kuala Lumpur calendar · [Code and method on GitHub]({REPO})")
+           f"Holidays: Kuala Lumpur calendar · [Code and method on GitHub]({REPO}) · "
+           "Light/dark mode: ⋮ menu, top right")
