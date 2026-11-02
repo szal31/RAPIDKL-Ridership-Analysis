@@ -1,4 +1,4 @@
 pandas
 matplotlib
 holidays
-streamlit
+streamlit>=1.50
