@@ -42,8 +42,8 @@ k3.metric("Weekday public holiday", f"{hol.median():+.0%} riders",
 
 # ---------- filters: one row above the charts ----------
 st.subheader("Explore", divider="gray")
-fc1, fc2, fc3 = st.columns([2.4, 2.2, 1.4])
-lines = fc1.multiselect("Lines", all_lines, default=all_lines)
+lines = st.multiselect("Lines", all_lines, default=all_lines)
+fc2, fc3 = st.columns([1.2, 1])
 period = fc2.segmented_control("Period", ["Last 12 months", "Since 2023", "All", "Custom"], default="Since 2023")
 grain = fc3.segmented_control("Show as", ["Daily", "Weekly", "Monthly"], default="Monthly")
 
