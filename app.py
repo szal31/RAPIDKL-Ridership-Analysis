@@ -29,6 +29,7 @@ all_lines = list(LINES.values())
 last = df.index.max()
 
 # ---------- header + headline findings (fixed, whole dataset) ----------
+st.caption(":material/train: Daily ridership from data.gov.my · LRT, MRT and Monorail lines")
 st.title("Rapid KL rail ridership")
 st.markdown(f"How Klang Valley rail recovered from COVID, which lines carry the city, and how weekends and "
             f"public holidays change demand. Daily data, Jan 2019 to {last:%d %b %Y}.")
